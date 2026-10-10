@@ -1,5 +1,10 @@
 # psu-mesh-simplifier
 
+> **Unofficial fan tool.** Not affiliated with or endorsed by SEGA. This repository contains
+> **no SEGA or Clementine assets** (models, textures, or game data); all test meshes are generated
+> synthetically by `psumesh/synth.py`. The PSU PS2 format adapter (`PsuPs2Adapter`) is currently a
+> **stub** awaiting format documentation. Real parts must be **welded** on import (see below).
+
 Mesh decimator for the PSU Clementine -> PS2 outfit port. Each character's body parts must fit the
 0x34800 (215,040-byte) block, and the PS2 format has no index buffer: every triangle-strip vertex is
 stored in full (48 bytes skinned, 22 bytes rigid single-bone). This tool shrinks oversized parts
@@ -58,6 +63,7 @@ looks like a border and gets locked, and nothing simplifies. Once the header/GIF
 known, set `ByteModel.per_strip_bytes` / `fixed_bytes`.
 
 ## Limitations
+- PSU PS2 adapter is a stub until the format write-up is available; importers must weld strip vertices.
 - Locked seams/borders put a floor on reduction. Heavily seamed parts may not reach very tight budgets.
 - Byte size isn't strictly monotonic in the triangle count, so the binary search finds a good fit,
   not a guaranteed maximum.
@@ -65,3 +71,6 @@ known, set `ByteModel.per_strip_bytes` / `fixed_bytes`.
   Strip quality could still be improved (backward extension, swaps).
 - Pure Python. A 3k-tri part simplifies in about 1 s; budget mode re-runs it about 12 times.
 - There's no texture/material awareness beyond UVs, and no per-vertex bone-palette limits.
+
+## License
+MIT, see `LICENSE`. Phantasy Star Universe is a trademark of SEGA; this project is independent.
